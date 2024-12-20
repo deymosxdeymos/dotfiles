@@ -1,0 +1,142 @@
+{
+  // "theme": "One Dark",
+  "ssh_connections": [
+    {
+      "host": "34.101.132.233",
+      "username": "ml-training-instance",
+      "args": [
+        "-i",
+        "~/.ssh/gcp_key"
+      ],
+      "projects": [
+        {
+          "paths": [
+            "~/a658-machine-learning-googlecloud"
+          ]
+        }
+      ]
+    }
+  ],
+  "node": {
+    // "path": null,
+    // "npm_path": null,
+    "disable_path_lookup": true
+  },
+  "features": {
+    "inline_completion_provider": "none"
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+  "vim_mode": true,
+  "relative_line_numbers": true,
+
+  // "vertical_scroll_margin": 50
+  "vertical_scroll_margin": 0,
+  "scroll_beyond_last_line": "off",
+  "inline_completions": {
+    "disabled_globs": [".env", "*.md", "*.json"]
+  },
+  "git": {
+    "inline_blame": { "enabled": true, "show_commit_summary": false }
+  },
+
+  // normal:
+  "ui_font_size": 13,
+
+  "use_autoclose": true,
+  "theme": "Gruvbox Dark Hard",
+  "scrollbar": {
+    "show": "never"
+  },
+  "ui_font_family": "Berkeley Mono Variable",
+  "buffer_font_family": "Berkeley Mono Variable",
+  "buffer_line_height": {
+    "custom": 1.25
+  },
+  "terminal": {
+    "dock": "bottom",
+    // "blinking": "on",
+    // normal:
+    "font_size": 13,
+    // streaming:
+    // "font_size": 22,
+    "font_family": "Berkeley Mono Variable",
+    "line_height": {
+      "custom": 1.25
+    },
+    "env": {
+      "GIT_EDITOR": "zed --wait"
+    }
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
+    },
+    "version": "2"
+  },
+  "soft_wrap": "none",
+  "cursor_blink": false,
+  "project_panel": {
+    "show_diagnostics": "all",
+    "scrollbar": { "show": "never" }
+  },
+  "base_keymap": "VSCode",
+  "indent_guides": {
+    "enabled": true
+  },
+  "current_line_highlight": "none",
+  "preview_tabs": {
+    "enabled": false,
+    "enable_preview_from_code_navigation": false
+  },
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "usePlaceholders": true,
+        // "buildFlags": ["-tags=debug"],
+        "completeUnimported": false,
+        "experimentalPostfixCompletions": true,
+        "hints": {
+          "assignVariableTypes": false,
+          "compositeLiteralFields": false,
+          "compositeLiteralTypes": false,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
+        }
+      }
+    }
+  },
+  "use_on_type_format": false,
+  "languages": {
+    "Markdown": {
+      "preferred_line_length": 80,
+      "format_on_save": "off"
+      // "formatter": {
+      //   "external": {
+      //     "command": "my-formatter"
+      //   }
+      // }
+    },
+    "SQL": {
+      "formatter": "prettier"
+    },
+    "JSON": {
+      "prettier": {
+        "allowed": true,
+        "parser": "json"
+      }
+    },
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "Rust": {
+      "use_on_type_format": false
+    }
+  }
+}
