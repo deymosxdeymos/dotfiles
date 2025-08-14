@@ -1,0 +1,12 @@
+theme = GruvboxDarkHard
+# theme = rasmus
+
+font-family = TX-02 Retina SemiCondensed
+font-size = 13
+desktop-notifications = false
+
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+keybind = shift+enter=text:\n

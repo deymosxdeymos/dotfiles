@@ -1,0 +1,8 @@
+# Ignore history files
+.config/nushell/history.sqlite3*
+.config/nushell/history.txt
+
+# Ignore cache and temporary files
+.config/*/cache/
+.config/*/tmp/
+*/.DS_Store

@@ -1,0 +1,50 @@
+theme = "gruvbox_dark_hard"
+
+[editor]
+bufferline = "multiple"
+color-modes = true
+cursorline = true
+idle-timeout = 0
+shell = ["nu", "--commands"]
+text-width = 100
+end-of-line-diagnostics = "hint"
+
+[editor.file-picker]
+hidden = false
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline.mode]
+insert = "INSERT"
+normal = "NORMAL" 
+select = "SELECT"
+
+[editor.indent-guides]
+character = "▏"
+render = true
+
+[editor.whitespace.characters]
+tab = "→"
+
+[editor.whitespace.render]
+tab = "all"
+
+[keys.normal]
+D = "extend_to_line_end"
+"C-x"= ":buffer-close"
+
+[keys.select]
+D = "extend_to_line_end"
+
+[keys.insert]
+"C-c"= "normal_mode"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+other-lines = "error"
+prefix-len = 1
+max-wrap = 20
+max-diagnostics = 10

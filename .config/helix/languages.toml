@@ -1,0 +1,159 @@
+# Language configurations converted from ncc/modules/common/editor/default.nix
+
+# Deno-formatted languages
+[[language]]
+name = "astro"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "astro", "-"] }
+
+[[language]]
+name = "css"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "css", "-"] }
+
+[[language]]
+name = "html"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "html", "-"] }
+
+[[language]]
+name = "javascript"
+auto-format = true
+language-servers = ["typescript-language-server", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.js"] }
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.json"] }
+
+[[language]]
+name = "jsonc"
+auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.jsonc"] }
+
+[[language]]
+name = "jsx"
+auto-format = true
+language-servers = ["typescript-language-server", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.jsx"] }
+
+[[language]]
+name = "markdown"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "md", "-"] }
+
+[[language]]
+name = "scss"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "scss", "-"] }
+
+[[language]]
+name = "svelte"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "svelte", "-"] }
+
+[[language]]
+name = "tsx"
+auto-format = true
+language-servers = ["typescript-language-server", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.tsx"] }
+
+[[language]]
+name = "typescript"
+auto-format = true
+language-servers = ["typescript-language-server", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.ts"] }
+
+[[language]]
+name = "vue"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "vue", "-"] }
+
+[[language]]
+name = "yaml"
+auto-format = true
+formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", "yaml", "-"] }
+
+# Other languages
+[[language]]
+name = "nix"
+auto-format = false
+formatter = { command = "nixfmt" }
+
+[[language]]
+name = "python"
+auto-format = true
+language-servers = ["basedpyright"]
+
+[[language]]
+name = "toml"
+auto-format = true
+
+[[language]]
+name = "rust"
+[language.debugger]
+name = "lldb-dap"
+transport = "stdio"
+command = "lldb-dap"
+
+[[language.debugger.templates]]
+name = "binary"
+request = "launch"
+completion = [{ name = "binary", completion = "filename" }]
+args = { program = "{0}", initCommands = ["command script import /nix/store/.../primer.py"] }
+
+# Language servers
+[language-server.typescript-language-server]
+command = "typescript-language-server"
+args = ["--stdio"]
+config.hostInfo = "helix"
+
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+
+[language-server.deno]
+command = "deno"
+args = ["lsp"]
+[language-server.deno.environment]
+NO_COLOR = "1"
+[language-server.deno.config.javascript]
+lint = true
+unstable = true
+[language-server.deno.config.javascript.suggest.imports.hosts]
+"https://deno.land" = true
+[language-server.deno.config.javascript.inlayHints.enumMemberValues]
+enabled = true
+[language-server.deno.config.javascript.inlayHints.functionLikeReturnTypes]
+enabled = true
+[language-server.deno.config.javascript.inlayHints.parameterNames]
+enabled = "all"
+[language-server.deno.config.javascript.inlayHints.parameterTypes]
+enabled = true
+[language-server.deno.config.javascript.inlayHints.propertyDeclarationTypes]
+enabled = true
+[language-server.deno.config.javascript.inlayHints.variableTypes]
+enabled = true
+
+[[language]]
+name = "typst"
+scope = "source.typst"
+injection-regex = "typst"
+file-types = ["typ"]
+comment-token = "//"
+language-servers = ["tinymist"]
+auto-format = true
+text-width = 80
+soft-wrap.enable = true
+
+[language-server.tinymist]
+command = "tinymist"
+
+[language-server.rust-analyzer]
+[language-server.rust-analyzer.config]
+"cargo.features" = "all"
+"check.command" = "clippy"
+"completion.callable.snippets" = "add_parentheses"
+"completion.excludeTraits" = ["yansi::Paint"]
+"diagnostics.disabled" = ["inactive-code", "unlinked-file"]
