@@ -1,0 +1,127 @@
+/* Aqua-inspired Waybar theme (macOS X) */
+
+/* Top bar container */
+window#waybar {
+  /* Semi-opaque light background */
+  background: rgba(248, 248, 248, 0.90);
+  /* Aqua pinstripe overlay */
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 1.5px,
+    rgba(255, 255, 255, 0.55) 1.5px,
+    rgba(255, 255, 255, 0.55) 4px
+  );
+  color: #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.44);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-family:
+    "Lucida Grande", "LucidaGrande", "Hiragino Sans", ui-sans-serif, system-ui,
+    -apple-system, sans-serif;
+  font-size: 12px;
+}
+
+/* Module containers */
+#custom-apple,
+#workspaces,
+#tray,
+#pulseaudio,
+#backlight,
+#network,
+#battery,
+#clock {
+  padding: 0 8px;
+  margin: 0 2px;
+}
+
+/* Apple icon */
+#custom-apple {
+  /* Hide text and render image instead */
+  font-size: 0; /* hides the  glyph */
+  padding: 0 6px 0 8px; /* tighter, biased left */
+  min-width: 28px;
+  margin-left: 6px; /* small inset from screen edge */
+  margin-right: 2px; /* tighten gap to workspaces */
+  background-image: url("apple.png");
+  background-repeat: no-repeat;
+  background-position: left center; /* keep icon left-aligned */
+  background-size: 30px 30px; /* larger Apple */
+}
+
+/* Niri/Sway workspaces (Aqua pill buttons with higher contrast) */
+#workspaces button {
+  padding: 2px 10px;
+  margin: 4px 3px;
+  border-radius: 14px;
+  color: #000;
+  background: linear-gradient(#f0f0f0 0%, #cfcfcf 100%);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+/* Note: GTK/Waybar CSS does not support position/pseudo-elements here,
+   so we approximate gloss with stronger gradients/shadows above. */
+#workspaces button.focused,
+#workspaces button.active {
+  background: linear-gradient(#e2e2e2 0%, #c6c6c6 100%);
+  border-color: rgba(0, 0, 0, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.22);
+}
+#workspaces button.urgent {
+  background: linear-gradient(#ffd2d2 0%, #ffb0b0 100%);
+  border-color: #cc3a3a;
+}
+#workspaces button:hover {
+  /* Lighter hover for visibility */
+  background: linear-gradient(#f8f8f8 0%, #dcdcdc 100%);
+}
+
+#workspaces {
+  padding-left: 0; /* pull workspaces closer to Apple */
+  margin-left: 0; /* override generic spacing */
+}
+
+/* Tray icons tighter spacing */
+#tray {
+  padding-right: 6px;
+}
+#tray > .item {
+  margin: 0 3px;
+}
+
+/* Status modules */
+#pulseaudio, #backlight, #network, #battery {
+  padding: 0 8px;
+}
+
+/* Battery warning coloring */
+#battery.warning {
+  color: #b58900;
+}
+#battery.critical {
+  color: #dc322f;
+}
+
+/* Clock: keep clean; date shows in tooltip */
+#clock {
+  padding: 0 8px;
+}
+
+/* Center window title styling */
+#window {
+  font-weight: 500;
+  padding: 0 8px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Remove ugly underlines or borders if present */
+* {
+  border: none;
+}

@@ -13,5 +13,22 @@ alias pstree = pstree -g 3
 alias tree = eza --tree --git-ignore --group-directories-first
 
 # Editor aliases
-alias hx = helix
-alias v = nvim
+alias vim = nvim
+
+# Git aliases
+alias gst = git status
+alias gc = git commit
+alias s = git status
+alias gaa = git add -A
+alias gcm = git checkout main
+alias gd = git diff
+alias gdc = git diff --cached
+alias up = git push
+alias upf = git push --force
+alias pu = git pull
+alias pur = git pull --rebase
+alias fe = git fetch
+alias re = git rebase
+alias lr = git l -30
+alias hs = git rev-parse --short HEAD
+alias hm = git log --format=%B -n 1 HEAD

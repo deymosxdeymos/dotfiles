@@ -27,3 +27,7 @@ cursor-color = #b6b6b5
 cursor-text = #1a1a19
 selection-background = #323231
 selection-foreground = #d1d1d1
+
+# Ghostty-specific options
+bold-is-bright = true
+split-divider-color = #2a2a29

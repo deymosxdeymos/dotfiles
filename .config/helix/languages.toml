@@ -1,6 +1,3 @@
-# Language configurations converted from ncc/modules/common/editor/default.nix
-
-# Deno-formatted languages
 [[language]]
 name = "astro"
 auto-format = true
@@ -56,7 +53,7 @@ formatter = { command = "deno", args = ["fmt", "--unstable-component", "--ext", 
 [[language]]
 name = "tsx"
 auto-format = true
-language-servers = ["typescript-language-server", "biome"]
+language-servers = ["typescript-language-server", "biome", "tailwindcss-language-server"]
 formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.tsx"] }
 
 [[language]]
@@ -84,7 +81,12 @@ formatter = { command = "nixfmt" }
 [[language]]
 name = "python"
 auto-format = true
-language-servers = ["basedpyright"]
+language-servers = ["basedpyright", "ruff"]
+formatter = { command = "ruff", args = ["format", "--stdin-filename", "%{buffer_name}", "-"] }
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
 
 [[language]]
 name = "toml"
@@ -157,3 +159,16 @@ command = "tinymist"
 "completion.callable.snippets" = "add_parentheses"
 "completion.excludeTraits" = ["yansi::Paint"]
 "diagnostics.disabled" = ["inactive-code", "unlinked-file"]
+
+[language-server.tailwindcss-language-server]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
+[[language]]
+name = "c"
+auto-format = true
+language-servers = ["clangd"]
+formatter = { command = "clang-format", args = ["-"] }
+
+[language-server.clangd]
+command = "clangd"
