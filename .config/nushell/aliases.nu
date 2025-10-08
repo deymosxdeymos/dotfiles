@@ -14,12 +14,14 @@ alias tree = eza --tree --git-ignore --group-directories-first
 
 # Editor aliases
 alias vim = nvim
+alias hx = helix
 
 # Git aliases
 alias gst = git status
 alias gc = git commit
 alias s = git status
 alias gaa = git add -A
+alias co = git checkout
 alias gcm = git checkout main
 alias gd = git diff
 alias gdc = git diff --cached
@@ -32,3 +34,9 @@ alias re = git rebase
 alias lr = git l -30
 alias hs = git rev-parse --short HEAD
 alias hm = git log --format=%B -n 1 HEAD
+
+alias c = claude --dangerously-skip-permissions
+
+alias ccusage-codex = bunx @ccusage/codex@latest
+
+alias ccusage = bunx ccusage

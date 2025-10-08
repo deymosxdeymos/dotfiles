@@ -37,4 +37,7 @@ $env.FNM_ARCH = "x64"
 # electron
 $env.ELECTRON_OZONE_PLATFORM_HINT = "wayland"
 
+# spicetify
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.spicetify")
+
 $env.EDITOR = "/usr/bin/nvim"

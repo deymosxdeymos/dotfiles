@@ -11,6 +11,11 @@ input {
     touchpad {
         tap
         natural-scroll
+        dwt
+        accel-speed 0.2
+        accel-profile "adaptive"
+        scroll-method "two-finger"
+        click-method "clickfinger"
     }
 
     mouse {
@@ -65,10 +70,6 @@ layout {
 
 spawn-at-startup "waybar"
 spawn-at-startup "hyprpaper"
-spawn-at-startup "/usr/libexec/ibus-ui-gtk3" "--enable-wayland-im" "--exec-daemon" "--daemon-args" "--xim --panel disable"
-
-hotkey-overlay {
-}
 
 prefer-no-csd
 
@@ -81,9 +82,6 @@ environment {
     DISPLAY ":0"
 }
 
-animations {
-}
-
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
@@ -92,8 +90,8 @@ binds {
     Mod+Shift+W hotkey-overlay-title="Chat: vesktop" { spawn "vesktop"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+E hotkey-overlay-title="File Manager: dolphin" { spawn "dolphin"; }
-    Mod+Shift+V hotkey-overlay-title="Clipboard History" { spawn "bash" "-c" "stash list | wofi --dmenu | stash decode --input \"$(cat)\" | wl-copy"; }
+    Mod+E hotkey-overlay-title="File Manager: nautilus" { spawn "nautilus"; }
+    Mod+Shift+V hotkey-overlay-title="Clipboard History" { spawn "bash" "-c" "ID=$(stash list --format tsv | wofi --dmenu | cut -f1) && [ -n \"$ID\" ] && stash decode \"$ID\" | wl-copy"; }
 
     XF86PowerOff hotkey-overlay-title="Power Menu" { spawn "bash" "-c" "echo -en \"Suspend\\nHibernate\\nPower Off\\nReboot\" | wofi --dmenu | tr --delete \" \" | tr '[:upper:]' '[:lower:]' | ifne xargs systemctl"; }
 
@@ -213,15 +211,12 @@ binds {
 
     Mod+Tab { toggle-column-tabbed-display; }
 
-    Mod+Shift+S { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
-
-    Print {
-        spawn "bash" "-c" "command -v spectacle >/dev/null 2>&1 && spectacle -rbno || { pkill grim; grim -g \"$(slurp -w 0)\" - | swappy -f - -o - | wl-copy --type image/png; }";
+    Mod+S {
+        spawn "bash" "-c" "FILE=\"$HOME/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png\" && grim -g \"$(slurp)\" \"$FILE\" && wl-copy \"$FILE\" && notify-send 'Screenshot saved' \"$FILE\"";
     }
-    Shift+Print {
-        spawn "bash" "-c" "command -v spectacle >/dev/null 2>&1 && spectacle -bfno || { pkill grim; grim - | swappy -f - -o - | wl-copy --type image/png; }";
+
+    Mod+Shift+S {
+        spawn "bash" "-c" "FILE=\"$HOME/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S).png\" && grim -g \"$(slurp)\" \"$FILE\" && wl-copy < \"$FILE\" && notify-send 'Screenshot saved' \"$FILE\"";
     }
 
     Mod+1 { focus-workspace 1; }

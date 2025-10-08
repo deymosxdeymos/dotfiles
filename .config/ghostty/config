@@ -1,11 +1,12 @@
 # theme = Vesper
-theme = USGC
-# theme = Gruvbox Dark Hard
+# theme = USGC
+theme = Gruvbox Dark Hard
 # theme = rasmus
-# theme = OneHalfLight
+# theme = Builtin Light
 
 font-family = TX-02 Retina SemiCondensed
 font-size = 13
+font-feature = -calt
 desktop-notifications = false
 
 keybind = alt+j=goto_split:down

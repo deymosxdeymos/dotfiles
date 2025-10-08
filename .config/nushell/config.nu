@@ -1,4 +1,4 @@
-use std
+use std/clip
 use std null_device
 
 $env.config.history.file_format = "sqlite"
@@ -164,7 +164,7 @@ $env.config.color_config.hints = "#484747"
 
 do --env {
   $env.PROMPT_COMMAND = {||
-    let hostname = try { hostname } catch { "unknown" }
+    let hostname = try { hostname } catch { "arch" }
     let current_dir = pwd | path basename
     $"(ansi white)❬($hostname)❭ (ansi green)($current_dir)(ansi red) ●(ansi reset) "
   }
