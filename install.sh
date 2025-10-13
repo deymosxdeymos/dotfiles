@@ -16,7 +16,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configs to manage
-CONFIGS=("niri" "helix" "nvim" "fuzzel" "nushell" "ghostty")
+CONFIGS=("niri" "helix" "nvim" "fuzzel" "nushell" "ghostty" "quickshell" "hypr")
 
 log_info() {
     echo -e "${GREEN}[INFO]${NC} $1"
