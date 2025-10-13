@@ -1,0 +1,23 @@
+{
+  "plugins": {
+    "LuaSnip": [],
+    "actions-preview.nvim": [],
+    "gruvbox.nvim": [],
+    "marks.nvim": [],
+    "mason.nvim": [],
+    "nvim-lspconfig": [],
+    "nvim-treesitter": {
+      "version": "'main'"
+    },
+    "nvim-web-devicons": [],
+    "oil.nvim": [],
+    "plenary.nvim": [],
+    "telescope-env.nvim": [],
+    "telescope-ui-select.nvim": [],
+    "telescope.nvim": {
+      "version": "'0.1.8'"
+    },
+    "typst-preview.nvim": [],
+    "vim-wakatime": []
+  }
+}

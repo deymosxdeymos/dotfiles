@@ -47,8 +47,8 @@ layout {
 
     border {
         width 1
-        active-color "#B6B6B6"
-        inactive-color "#E6E6E6"
+        active-color "#6BA4E7"
+        inactive-color "#B8D4F1"
         urgent-color "#cc3a3a"
     }
 
@@ -68,12 +68,21 @@ layout {
     }
 }
 
-spawn-at-startup "waybar"
-spawn-at-startup "hyprpaper"
+// spawn-at-startup "waybar"
+// spawn-at-startup "hyprpaper"
+
+// DankShell integration
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
+spawn-at-startup "dms" "run"
 
 prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+config-notification {
+    disable-failed
+}
 
 environment {
     XCURSOR_SIZE "24"
@@ -88,20 +97,32 @@ binds {
     Mod+Return hotkey-overlay-title="Terminal: ghostty" { spawn "ghostty" "--gtk-single-instance=true"; }
     Mod+W hotkey-overlay-title="Browser" { spawn "/home/deymos/AppImages/helium.appimage"; }
     Mod+Shift+W hotkey-overlay-title="Chat: vesktop" { spawn "vesktop"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+D hotkey-overlay-title="Application Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Mod+E hotkey-overlay-title="File Manager: nautilus" { spawn "nautilus"; }
-    Mod+Shift+V hotkey-overlay-title="Clipboard History" { spawn "bash" "-c" "ID=$(stash list --format tsv | wofi --dmenu | cut -f1) && [ -n \"$ID\" ] && stash decode \"$ID\" | wl-copy"; }
 
-    XF86PowerOff hotkey-overlay-title="Power Menu" { spawn "bash" "-c" "echo -en \"Suspend\\nHibernate\\nPower Off\\nReboot\" | wofi --dmenu | tr --delete \" \" | tr '[:upper:]' '[:lower:]' | ifne xargs systemctl"; }
+    // DankShell keybinds
+    Mod+Space hotkey-overlay-title="Application Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+Alt+V hotkey-overlay-title="Clipboard Manager" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Mod+M hotkey-overlay-title="Task Manager" { spawn "dms" "ipc" "call" "processlist" "toggle"; }
+    Mod+N hotkey-overlay-title="Notification Center" { spawn "dms" "ipc" "call" "notifications" "toggle"; }
+    Mod+Shift+Comma hotkey-overlay-title="Settings" { spawn "dms" "ipc" "call" "settings" "toggle"; }
+    Mod+P hotkey-overlay-title="Notepad" { spawn "dms" "ipc" "call" "notepad" "toggle"; }
+    Super+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+    Mod+X hotkey-overlay-title="Power Menu" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
+    Mod+Shift+C hotkey-overlay-title="Control Center" { spawn "dms" "ipc" "call" "control-center" "toggle"; }
+    Mod+Shift+N allow-when-locked=true { spawn "dms" "ipc" "call" "night" "toggle"; }
+    Mod+Shift+V hotkey-overlay-title="Clipboard History (stash)" { spawn "bash" "-c" "ID=$(stash list --format tsv | wofi --dmenu | cut -f1) && [ -n \"$ID\" ] && stash decode \"$ID\" | wl-copy"; }
 
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    // Removed - using DankShell power menu (Mod+X) instead
 
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+    // DankShell audio/brightness controls
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "3"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "3"; }
+    XF86AudioMute        allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
+
+    XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
 
     Mod+F1 allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
     Mod+F2 allow-when-locked=true { spawn "brightnessctl" "set" "--min-value=0" "5%-"; }
@@ -244,3 +265,7 @@ binds {
 
     Mod+Shift+P { power-off-monitors; }
 }
+
+// DankShell theming - requires niri build newer than 3933903 with include support
+// include "dms/colors.kdl"
+// include "dms/layout.kdl"
