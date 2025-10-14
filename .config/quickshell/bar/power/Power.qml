@@ -7,10 +7,12 @@ import Quickshell.Widgets
 import qs
 import qs.bar
 import qs.components
+import "../../components" as AppComponents
 
 BarWidgetInner {
 	id: root
 	required property var bar;
+	readonly property var wattStatus: AppComponents.WattStatus;
 
 	readonly property var displayDevice: {
 		const device = UPower.displayDevice;
@@ -122,13 +124,58 @@ BarWidgetInner {
 
 					ColumnLayout {
 						spacing: 0
-						Label { text: "Power Profile" }
+						Label { text: "Power Status" }
 
-						OptionSlider {
-							values: ["Power Save", "Balanced", "Performance"]
-							index: PowerProfiles.profile
-							onIndexChanged: PowerProfiles.profile = this.index;
-							implicitWidth: 350
+						ColumnLayout {
+							Layout.fillWidth: true
+							spacing: 2
+
+							SmallLabel {
+								text: {
+									const profile = root.wattStatus.profileLabel;
+									if (profile && profile !== "") return `Profile: ${profile}`;
+									return `Profile: ${root.isPluggedIn ? "Charger" : "Battery"}`;
+								}
+							}
+
+							SmallLabel { text: `Governor: ${root.wattStatus.governor}` }
+
+							SmallLabel {
+								text: `Turbo: ${root.wattStatus.turboStatus}`
+								color: root.wattStatus.turboStatus.toLowerCase().startsWith("enabled") ? "#d0eeffff" : "#ffd480"
+							}
+
+							SmallLabel {
+								visible: root.wattStatus.energyPreference !== ""
+								text: `EPP: ${root.wattStatus.energyPreference}`
+							}
+
+							SmallLabel {
+								visible: root.wattStatus.energyBias !== ""
+								text: `EPB: ${root.wattStatus.energyBias}`
+							}
+
+							SmallLabel {
+								visible: root.wattStatus.temperature !== ""
+								text: `CPU Temp: ${root.wattStatus.temperature}`
+							}
+
+							SmallLabel {
+								text: root.wattStatus.serviceActive ? "Watt service: active" : "Watt service: inactive"
+								color: root.wattStatus.serviceActive ? "#d0eeffff" : "#ff8080"
+							}
+
+							SmallLabel {
+								visible: root.wattStatus.usingFallback
+								text: "Using fallback sysfs data"
+								color: "#ffb347"
+							}
+
+							SmallLabel {
+								visible: root.wattStatus.statusMessage !== "" && !root.wattStatus.usingFallback
+								text: root.wattStatus.statusMessage
+								color: "#ffb347"
+							}
 						}
 					}
 				}
