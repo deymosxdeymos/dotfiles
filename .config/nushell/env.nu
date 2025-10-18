@@ -40,4 +40,12 @@ $env.ELECTRON_OZONE_PLATFORM_HINT = "wayland"
 # spicetify
 $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.spicetify")
 
+# nvim
 $env.EDITOR = "/usr/bin/nvim"
+
+# radicle
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.radicle/bin")
+
+# nix
+$env.PATH = ($env.PATH | split row (char esep) | prepend "/nix/var/nix/profiles/default/bin")
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.nix-profile/bin")

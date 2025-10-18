@@ -1,0 +1,66 @@
+"ui.background" = { bg = "bg", fg = "fg" }
+"ui.text" = "fg"
+"ui.text.inactive" = { fg = "variable" }
+"ui.cursor" = { bg = "fg", fg = "bg" }
+"ui.cursor.primary" = { bg = "fg", fg = "bg" }
+"ui.selection" = { bg = "selection" }
+"ui.selection.primary" = { bg = "selection" }
+"inactive_selection" = "selection"
+"inactive_selection_foreground" = "fg"
+"line_highlight" = "cursorline"
+"ui.cursorline.primary" = { bg = "cursorline" }
+"ui.cursorline.secondary" = { bg = "cursorline" }
+"ui.linenr" = "linenr"
+"ui.linenr.selected" = "fg"
+"ui.gutter" = { fg = "linenr", bg = "bg" }
+"ui.statusline" = { bg = "modeline", fg = "fg" }
+"ui.statusline.inactive" = { bg = "modeline_inactive", fg = "fg" }
+"ui.menu" = { bg = "completion_bg", fg = "fg" }
+"ui.menu.selected" = { bg = "completion_sel", fg = "fg" }
+"ui.menu.scroll" = { fg = "completion_scroll_fg", bg = "completion_scroll_bg" }
+"ui.popup" = { bg = "completion_bg", fg = "fg" }
+"ui.popup.info" = { bg = "completion_bg", fg = "fg" }
+"ui.help" = { bg = "completion_bg", fg = "fg" }
+"ui.window" = { bg = "bg", fg = "modeline" }
+"ui.highlight" = { bg = "hover" }
+"ui.cursor.match" = { bg = "hover" }
+
+"comment" = { fg = "comment" }
+"comment.documentation" = { fg = "doc" }
+"keyword" = { fg = "keyword" }
+"keyword.directive" = { fg = "preprocessor" }
+"function" = { fg = "function" }
+"function.special" = { fg = "preprocessor" }
+"variable" = { fg = "variable" }
+"variable.other.member" = { fg = "variable", modifiers = ["italic"] }
+"property" = { fg = "variable", modifiers = ["italic"] }
+"string" = { fg = "string" }
+"type" = { fg = "type" }
+"type.builtin" = { fg = "type", modifiers = ["italic"] }
+"diagnostic" = { underline = { color = "keyword", style = "curl" } }
+"diagnostic.info" = { underline = { color = "preprocessor", style = "line" } }
+"diagnostic.hint" = { underline = { color = "variable", style = "line" } }
+"diagnostic.warning" = { underline = { color = "string", style = "line" } }
+"diagnostic.error" = { underline = { color = "keyword", style = "line" } }
+
+[palette]
+bg = "#0d1017"
+fg = "#b7c9ee"
+modeline = "#156570"
+modeline_inactive = "#080a0f"
+selection = "#31343a"
+cursorline = "#0b0e14"
+linenr = "#8997b2"
+comment = "#42767d"
+doc = "#6a866f"
+keyword = "#349672"
+preprocessor = "#5ca9af"
+function = "#5fc995"
+variable = "#6ec5b1"
+string = "#15e04a"
+type = "#17b343"
+hover = "#191c23"
+completion_bg = "#25282e"
+completion_sel = "#46484d"
+completion_scroll_fg = "#66686d"
+completion_scroll_bg = "#46484d"

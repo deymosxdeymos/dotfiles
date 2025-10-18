@@ -172,3 +172,14 @@ formatter = { command = "clang-format", args = ["-"] }
 
 [language-server.clangd]
 command = "clangd"
+
+[language-server.texlab]
+command = "texlab"
+
+[language-server.texlab.config.texlab.build]
+onSave = true
+
+[[language]]
+name = "latex"
+language-servers = ["texlab"]
+auto-format = true

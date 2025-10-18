@@ -1,8 +1,9 @@
 # theme = Vesper
 # theme = USGC
-theme = Gruvbox Dark Hard
+# theme = Gruvbox Dark Hard
 # theme = rasmus
 # theme = Rose Pine Dawn
+theme = outfoxxed
 
 font-family = TX-02 Retina SemiCondensed
 font-size = 13
