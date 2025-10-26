@@ -1,6 +1,6 @@
-# theme = "gruvbox_dark_hard"
+theme = "gruvbox_dark_hard"
 # theme = "vesper"
-theme = "outfoxxed"
+# theme = "outfoxxed"
 
 [editor]
 bufferline = "multiple"

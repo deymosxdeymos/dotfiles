@@ -14,7 +14,6 @@ alias tree = eza --tree --git-ignore --group-directories-first
 
 # Editor aliases
 alias vim = nvim
-alias hx = helix
 
 # Git aliases
 alias gst = git status

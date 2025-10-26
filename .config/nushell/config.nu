@@ -1,7 +1,12 @@
 use std/clip
 use std null_device
 
-$env.config.history.file_format = "sqlite"
+
+# Load aliases
+source aliases.nu
+# Zoxide integration (smart cd with frecency)
+source zoxide.nu
+
 $env.config.history.isolation = false
 $env.config.history.max_size = 10_000_000
 $env.config.history.sync_on_enter = true
@@ -137,9 +142,9 @@ $env.config.keybindings ++= [
 
 $env.config.color_config.bool = {||
   if $in {
-    { fg: "#459a65", attr: b }
+    "light_green_bold"
   } else {
-    { fg: "#cd0400", attr: b }
+    "light_red_bold"
   }
 }
 
@@ -151,35 +156,125 @@ $env.config.color_config.string = {||
   }
 }
 
-$env.config.color_config.row_index = { fg: "#f6c443", attr: b }
-$env.config.color_config.header = { fg: "#f6c443", attr: b }
-
-$env.config.color_config.shape_command = "#459a65"
-$env.config.color_config.shape_external = "#459a65"
-$env.config.color_config.shape_string = "#ea3d8d"
-$env.config.color_config.shape_keyword = "#f6c443"
-$env.config.color_config.shape_flag = "#3477f6"
-$env.config.color_config.shape_option = "#3477f6"
-$env.config.color_config.hints = "#484747"
+$env.config.color_config.row_index = "light_yellow_bold"
+$env.config.color_config.header = "light_yellow_bold"
 
 do --env {
-  $env.PROMPT_COMMAND = {||
-    let hostname = try { hostname } catch { "arch" }
-    let current_dir = pwd | path basename
-    $"(ansi white)❬($hostname)❭ (ansi green)($current_dir)(ansi red) ●(ansi reset) "
-  }
-  $env.PROMPT_INDICATOR = ""
-  $env.PROMPT_INDICATOR_VI_NORMAL = ""
-  $env.PROMPT_INDICATOR_VI_INSERT = ""
-  $env.PROMPT_MULTILINE_INDICATOR = ""
-  $env.PROMPT_COMMAND_RIGHT = ""
+  def prompt-header [
+    --left-char: string
+  ]: nothing -> string {
+    let code = $env.LAST_EXIT_CODE
 
-  $env.TRANSIENT_PROMPT_INDICATOR = ""
-  $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = ""
-  $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = ""
-  $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
-  $env.TRANSIENT_PROMPT_COMMAND = $env.PROMPT_COMMAND
-  $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
+    let jj_workspace_root = try {
+      jj workspace root err> $null_device
+    } catch {
+      ""
+    }
+
+    let hostname = if ($env.SSH_CONNECTION? | is-not-empty) {
+      let hostname = try {
+        hostname
+      } catch {
+        "remote"
+      }
+
+      $"(ansi light_green_bold)@($hostname)(ansi reset) "
+    } else {
+      ""
+    }
+
+    # https://github.com/nushell/nushell/issues/16205
+    #
+    # Case insensitive filesystems strike again!
+    let pwd = pwd | path expand
+
+    let body = if ($jj_workspace_root | is-not-empty) {
+      let subpath = $pwd | path relative-to $jj_workspace_root
+      let subpath = if ($subpath | is-not-empty) {
+        $"(ansi magenta_bold) → (ansi reset)(ansi blue)($subpath)"
+      }
+
+      $"($hostname)(ansi light_yellow_bold)($jj_workspace_root | path basename)($subpath)(ansi reset)"
+    } else {
+      let pwd = if ($pwd | str starts-with $env.HOME) {
+        "~" | path join ($pwd | path relative-to $env.HOME)
+      } else {
+        $pwd
+      }
+
+      $"($hostname)(ansi cyan)($pwd)(ansi reset)"
+    }
+
+    let command_duration = ($env.CMD_DURATION_MS | into int) * 1ms
+    let command_duration = if $command_duration <= 2sec {
+      ""
+    } else {
+      $"┫(ansi light_magenta_bold)($command_duration)(ansi light_yellow_bold)┣━"
+    }
+
+    let exit_code = if $code == 0 {
+      ""
+    } else {
+      $"┫(ansi light_red_bold)($code)(ansi light_yellow_bold)┣━"
+    }
+
+    let middle = if $command_duration == "" and $exit_code == "" {
+      "━"
+    } else {
+      ""
+    }
+
+    $"(ansi light_yellow_bold)($left_char)($exit_code)($middle)($command_duration)(ansi reset) ($body)(char newline)"
+  }
+
+  $env.PROMPT_INDICATOR = $"(ansi light_yellow_bold)┃(ansi reset) "
+  $env.PROMPT_INDICATOR_VI_NORMAL = $env.PROMPT_INDICATOR
+  $env.PROMPT_INDICATOR_VI_INSERT = $env.PROMPT_INDICATOR
+  $env.PROMPT_MULTILINE_INDICATOR = $env.PROMPT_INDICATOR
+  $env.PROMPT_COMMAND = {||
+    prompt-header --left-char "┏"
+  }
+  $env.PROMPT_COMMAND_RIGHT = {||
+    let jj_status = try {
+      jj --quiet --color always --ignore-working-copy log --no-graph --revisions @ --template '
+        separate(
+          " ",
+          if(empty, label("empty", "(empty)")),
+          coalesce(
+            surround(
+              "\"",
+              "\"",
+              if(
+                description.first_line().substr(0, 24).starts_with(description.first_line()),
+                description.first_line().substr(0, 24),
+                description.first_line().substr(0, 23) ++ "…"
+              )
+            ),
+            label(if(empty, "empty"), description_placeholder)
+          ),
+          bookmarks.join(", "),
+          change_id.shortest(),
+          commit_id.shortest(),
+          if(conflict, label("conflict", "(conflict)")),
+          if(divergent, label("divergent prefix", "(divergent)")),
+          if(hidden, label("hidden prefix", "(hidden)")),
+        )
+      ' err> $null_device
+    } catch {
+      ""
+    }
+
+    $jj_status
+  }
+
+  $env.TRANSIENT_PROMPT_INDICATOR = "  "
+  $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = $env.TRANSIENT_PROMPT_INDICATOR
+  $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = $env.TRANSIENT_PROMPT_INDICATOR
+  $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = $env.TRANSIENT_PROMPT_INDICATOR
+  $env.TRANSIENT_PROMPT_COMMAND = {||
+    prompt-header --left-char "━"
+  }
+  $env.TRANSIENT_PROMPT_COMMAND_RIGHT = $env.PROMPT_COMMAND_RIGHT
 }
 
 let menus = [
@@ -229,6 +324,125 @@ $env.config.menus = $env.config.menus
 | where name not-in ($menus | get name)
 | append $menus
 
+module dump {
+  def site-path []: nothing -> path {
+    $env.HOME | path join "Projects" "site"
+  }
+
+  def dump-path []: nothing -> path {
+    site-path | path join "site" "dump"
+  }
+
+  # Convert a thought dump namespace to the filesystem path.
+  export def to-path []: string -> path {
+    let namespace = $in
+
+    dump-path
+    | path join ...($namespace | split row ".")
+    | $in + ".md"
+  }
+
+  # Convert a filesystem path to a thought dump namespace.
+  export def to-dump []: path -> string {
+    let path = $in
+
+    $path
+    | path relative-to (dump-path)
+    | path split
+    | str join "."
+    | str substring 0..<-3
+  }
+
+  # List all thought dumps that start with the given namespace.
+  export def list [
+    namespace: string = ""
+  ]: nothing -> table<namespace: string, path: path> {
+    let dump_prefix = dump-path | path join ...($namespace | split row ".")
+
+    let dump_parent_contents = glob ($dump_prefix | path parse | get parent | path join "**" "*.md")
+    let dump_matches = $dump_parent_contents | where { str starts-with $dump_prefix }
+
+    ls ...$dump_matches | each {
+      merge { path: $in.name }
+      | select path size modified
+      | merge { namespace: ($in.path | to-dump) }
+    }
+  }
+
+  # Deploy the thought dumps and thus the website.
+  export def deploy []: nothing -> nothing {
+    print $"(ansi green)deploying...(ansi reset)"
+
+    cd (site-path)
+    ./apply.nu
+  }
+
+  # Edit a thought dump.
+  export def edit [
+    namespace: string # The thought dump to edit. Namespaced using '.', does not include file extension.
+  ]: nothing -> nothing {
+    let dump_path = $namespace | to-path
+
+    let old_dump_size = try { ls $dump_path }
+
+    mkdir ($dump_path | path parse | get parent)
+    touch $dump_path
+
+    let old_dump_hash = open $dump_path | hash sha256
+
+    ^$env.EDITOR $dump_path
+
+    let dump_size = ls $dump_path | get 0.size
+    if $dump_size == 0b {
+      print $"(ansi red)thought dump was emptied(ansi reset)"
+      delete $namespace --existed-before ($old_dump_size != null)
+    } else if $old_dump_hash == (open $dump_path | hash sha256) {
+      print $"(ansi yellow)thought dump was not modified, doing nothing(ansi reset)"
+    } else {
+      print $"(ansi magenta)thought dump was edited(ansi reset)"
+
+      let jj_arguments = [ "--repository", (site-path) ]
+
+      jj ...$jj_arguments commit --message $"dump\(($namespace)\): update"
+      jj ...$jj_arguments bookmark set master --revision @-
+
+      [
+        { jj ...$jj_arguments git push --remote origin }
+        { jj ...$jj_arguments git push --remote rad }
+        { deploy }
+      ] | par-each { do $in } | last
+    }
+  }
+
+  # Delete a thought dump.
+  export def delete [
+    namespace: string # The thought dump to edit. Namespaced using '.', does not include file extension.
+    --existed-before = true
+  ]: nothing -> nothing {
+    let dump_path = $namespace | to-path
+    let parent_path = $dump_path | path parse | get parent
+
+    print $"(ansi red)deleting thought dump...(ansi reset)"
+    print --no-newline (ansi red)
+    rm --verbose $dump_path
+    print --no-newline (ansi reset)
+
+    if (ls $parent_path | length) == 0 {
+      print $"(ansi red)parent folder is empty, deleting that too...(ansi reset)"
+      print $"(ansi yellow)other parents will not be deleted, if you want to delete those do it manually(ansi reset)"
+      rm $parent_path
+    }
+
+    if $existed_before {
+      deploy
+    } else {
+      print $"(ansi green)the thought dump didn't exist before, so skipping deployment(ansi reset)"
+    }
+  }
+}
+
+use dump
+
 # Retrieve the output of the last command.
 def _ []: nothing -> any {
   $env.last?
@@ -247,99 +461,85 @@ def --env mcg [path: path]: nothing -> nothing {
   jj git init --colocate
 }
 
-# Load aliases
-source aliases.nu
+def --env "nu-complete jc" [commandline: string] {
+  let stor = stor open
 
-# Zoxide integration (smart cd with frecency)
-source zoxide.nu
-
-# Downloads housekeeping helpers
-# Generate a non-clobbering destination path by appending " (n)" suffix
-def __downloads-unique-dest [dest: path]: nothing -> path {
-  if not ($dest | path exists) {
-    $dest
-  } else {
-    let parsed = ($dest | path parse)
-    let candidate = (
-      (2..1000)
-      | each {|i|
-          if ($parsed.extension | is-empty) {
-            $parsed.parent | path join $"($parsed.stem) ($i)"
-          } else {
-            $parsed.parent | path join $"($parsed.stem) ($i).($parsed.extension)"
-          }
-        }
-      | prepend $dest
-      | where {|p| not ($p | path exists) }
-      | first
-    )
-    $candidate
+  if $stor.jc_completions? == null {
+    stor create --table-name jc_completions --columns { value: str, description: str, is_flag: bool }
   }
+
+  if $stor.jc_completions_ran? == null {
+    stor create --table-name jc_completions_ran --columns { _: bool }
+  }
+
+  if $stor.jc_completions_ran == [] { try {
+    let about = ^jc --about
+    | from json
+
+    let magic = $about
+    | get parsers
+    | each { { value: $in.magic_commands?, description: $in.description } }
+    | where value != null
+    | flatten
+
+    let options = $about
+    | get parsers
+    | select argument description
+    | rename value description
+
+    let inherent = ^jc --help
+    | lines
+    | split list "" # Group with empty lines as boundary.
+    | where { $in.0? == "Options:" } | get 0 # Get the first section that starts with "Options:"
+    | skip 1 # Remove header
+    | each { str trim }
+    | parse "{short},  {long} {description}"
+    | update description { str trim }
+    | each {|record|
+      [[value, description];
+        [$record.short, $record.description],
+        [$record.long, $record.description],
+      ]
+    }
+    | flatten
+
+    for entry in $magic {
+      stor insert --table-name jc_completions --data-record ($entry | insert is_flag false)
+    }
+
+    for entry in ($options ++ $inherent) {
+      stor insert --table-name jc_completions --data-record ($entry | insert is_flag true)
+    }
+
+    stor insert --table-name jc_completions_ran --data-record { _: true }
+  } }
+
+  if ($commandline | str contains "-") {
+    $stor.jc_completions
+  } else {
+    $stor.jc_completions
+    | where is_flag == 0
+  } | select value description
 }
 
-# Tidy up your Downloads folder by moving files into categorized subfolders.
-# Simple: runs by default; add --dry-run to preview.
-def "downloads tidy" [
-  --dry-run (-n)              # preview only
-  --path (-p): path           # explicit downloads directory
-]: nothing -> any {
-  let default_dir = if ($env.XDG_DOWNLOAD_DIR? | is-not-empty) { $env.XDG_DOWNLOAD_DIR } else { $env.HOME | path join "Downloads" }
-  let root = (if ($path | is-not-empty) { $path } else { $default_dir }) | path expand
+# Run `jc` (JSON Converter).
+def --wrapped jc [...arguments: string@"nu-complete jc"]: [any -> table, any -> record, any -> string] {
+  let run = ^jc ...$arguments | complete
 
-  if not ($root | path exists) {
-    error make { msg: $"Downloads folder not found: ($root)" }
+  if $run.exit_code != 0 {
+    error make {
+      msg: "jc exection failed"
+      label: {
+        text: ($run.stderr | str replace "jc:" "" | str replace "Error -" "" | str trim)
+        span: (metadata $arguments).span
+      }
+    }
   }
 
-  let categories = [
-    { name: "Images"        , exts: [ "jpg","jpeg","png","gif","webp","bmp","tiff","tif","svg","heic","heif","avif" ] }
-    { name: "Videos"        , exts: [ "mp4","mkv","webm","mov","avi","flv","wmv","m4v" ] }
-    { name: "Audio"         , exts: [ "mp3","aac","flac","wav","ogg","oga","m4a","opus" ] }
-    { name: "Archives"      , exts: [ "zip","tar","gz","tgz","bz2","xz","zst","7z","rar" ] }
-    { name: "Documents"     , exts: [ "pdf","txt","md","rtf","odt","rtfd","tex","djvu","doc","docx","xps","json" ] }
-    { name: "Spreadsheets"  , exts: [ "csv","tsv","xls","xlsx","ods" ] }
-    { name: "Presentations" , exts: [ "ppt","pptx","key","odp" ] }
-    { name: "Code"          , exts: [ "sh","bash","zsh","nu","py","js","mjs","ts","tsx","rs","go","c","h","cpp","hpp","java","kt","rb","php","html","css","yaml","yml","toml","sql","ipynb" ] }
-    { name: "Fonts"         , exts: [ "ttf","otf","woff","woff2" ] }
-    { name: "Books"         , exts: [ "epub","mobi","azw","azw3","cbz","cbr" ] }
-    { name: "Subtitles"     , exts: [ "srt","ass","vtt","sub" ] }
-    { name: "DiskImages"    , exts: [ "iso","img","dmg" ] }
-    { name: "Installers"    , exts: [ "deb","rpm","pkg","msi","exe","appimage","apk","pup" ] }
-    { name: "Torrents"      , exts: [ "torrent" ] }
-    { name: "Logs"          , exts: [ "log" ] }
-    { name: "Temp"          , exts: [ "crdownload","part","partial","tmp","zsync" ] }
-  ]
-
-  let ext_map = (
-    $categories
-    | reduce --fold {} {|row, acc|
-        $row.exts
-        | reduce --fold $acc {|e, acc2| $acc2 | upsert ($e | str downcase) $row.name }
-      }
-  )
-
-  let files = (ls -a $root | where type == file)
-
-  let plan = (
-    $files
-    | each {|f|
-        let parsed = ($f.name | path parse)
-        let ext = (try { $parsed.extension | str downcase } catch { "" })
-        let cat = (try { $ext_map | get $ext } catch { "Other" })
-        let dest_dir = ($root | path join $cat)
-        let dest = (__downloads-unique-dest ($dest_dir | path join ($f.name | path basename)))
-        { src: $f.name, dest: $dest, category: $cat, size: $f.size }
-      }
-  )
-
-  if ($plan | is-empty) {
-    print $"No files to move in ($root)."
-  } else if $dry_run {
-    print "Dry run:"
+  if "--help" in $arguments or "-h" in $arguments {
+    $run.stdout
   } else {
-    $plan | get dest | each {|p| mkdir ($p | path dirname) } | ignore
-    $plan | each {|m| mv $m.src $m.dest } | ignore
-    print $"Moved ($plan | length) files into categorized folders under ($root)."
+    $run.stdout | from json
   }
-
-  $plan | select category src dest size | sort-by category src
 }
+source $"($nu.home-path)/.cargo/env.nu"
