@@ -1,0 +1,29 @@
+# Pierre Dark — Ghostty Theme
+# Ported from https://github.com/pierrecomputer/theme
+
+background = #070707
+foreground = #fbfbfb
+cursor-color = #009fff
+cursor-text = #070707
+selection-background = #19283c
+selection-foreground = #fbfbfb
+
+# Normal colors
+palette = 0=#141415
+palette = 1=#ff2e3f
+palette = 2=#0dbe4e
+palette = 3=#ffca00
+palette = 4=#009fff
+palette = 5=#c635e4
+palette = 6=#08c0ef
+palette = 7=#c6c6c8
+
+# Bright colors
+palette = 8=#141415
+palette = 9=#ff2e3f
+palette = 10=#0dbe4e
+palette = 11=#ffca00
+palette = 12=#009fff
+palette = 13=#c635e4
+palette = 14=#08c0ef
+palette = 15=#c6c6c8

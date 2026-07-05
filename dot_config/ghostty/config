@@ -1,0 +1,13 @@
+theme = light: Pierre Light, dark: Pierre Dark
+
+font-family = TX-02 Retina SemiCondensed
+font-size = 13
+font-feature = -calt
+desktop-notifications = false
+
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+keybind = shift+enter=text:\n
+keybind = ctrl+k=toggle_command_palette

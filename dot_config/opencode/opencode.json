@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["@ex-machina/opencode-anthropic-auth@1.8.1", "./plugins/ban-git.js"],
+  "instructions": ["instructions/jj-over-git.md"],
+  "autoupdate": false,
+  "permission": {
+    "*": "allow",
+    "bash": {
+      "*": "allow",
+      "git*": "deny",
+      "*/git*": "deny"
+    }
+  },
+  "mcp": {
+    "expect": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "expect-cli@latest",
+        "mcp"
+      ],
+      "enabled": true
+    }
+  }
+}

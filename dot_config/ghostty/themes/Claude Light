@@ -1,0 +1,30 @@
+# Claude Light Terminal Theme for Ghostty
+# Inspired by Anthropic's Claude visual identity
+# https://github.com/marceloduarte/claude-terminal-theme
+
+background = #faf9f5
+foreground = #2a2a28
+cursor-color = #d97757
+cursor-text = #faf9f5
+selection-background = #e8e6dc
+selection-foreground = #141413
+
+# Normal colors
+palette = 0=#141413
+palette = 1=#b8512e
+palette = 2=#5e7245
+palette = 3=#9e7a30
+palette = 4=#4a7ea8
+palette = 5=#7a5c84
+palette = 6=#4a8a78
+palette = 7=#b0aea5
+
+# Bright colors
+palette = 8=#b0aea5
+palette = 9=#d97757
+palette = 10=#788c5d
+palette = 11=#b8944a
+palette = 12=#6a9bcc
+palette = 13=#9b7ea4
+palette = 14=#6aaa96
+palette = 15=#141413

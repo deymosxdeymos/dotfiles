@@ -1,0 +1,2 @@
+[network]
+dns.preferIpv4 = true

@@ -1,0 +1,7 @@
+.chezmoi.toml
+.chezmoi.json
+node_modules/
+*.log
+*.tmp
+*.bak
+*.backup

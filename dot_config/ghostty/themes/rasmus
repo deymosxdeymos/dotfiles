@@ -1,0 +1,30 @@
+# Rasmus — Ghostty Theme
+# Ported from the Helix "rasmus" color scheme
+# Originally by Rohit K Viswanath, based on rsms/sublime-theme
+
+background = #1a1a19
+foreground = #d1d1d1
+cursor-color = #3a3a39
+cursor-text = #d1d1d1
+selection-background = #323231
+selection-foreground = #d1d1d1
+
+# Normal colors
+palette = 0=#333332
+palette = 1=#ff968c
+palette = 2=#61957f
+palette = 3=#ffc591
+palette = 4=#8db4d4
+palette = 5=#de9bc8
+palette = 6=#7bb099
+palette = 7=#d1d1d1
+
+# Bright colors
+palette = 8=#4c4c4b
+palette = 9=#ffafa5
+palette = 10=#7aae98
+palette = 11=#ffdeaa
+palette = 12=#a6cded
+palette = 13=#f7b4e1
+palette = 14=#94c9b2
+palette = 15=#eaeaea
