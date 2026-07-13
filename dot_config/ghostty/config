@@ -1,8 +1,9 @@
-theme = light: Pierre Light, dark: Pierre Dark
+theme = light: rasmus-light, dark: rasmus
 
 font-family = TX-02 Retina SemiCondensed
 font-size = 13
 font-feature = -calt
+command = /home/deymos/.cargo/bin/nu
 desktop-notifications = false
 
 keybind = alt+j=goto_split:down

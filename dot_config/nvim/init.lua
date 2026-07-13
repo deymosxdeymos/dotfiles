@@ -207,7 +207,7 @@ local function apply_system_theme()
 
   current_system_scheme = scheme
   vim.o.background = scheme
-  vim.cmd.colorscheme(scheme == "light" and "rose-pine-dawn" or "vesper")
+  vim.cmd.colorscheme(scheme == "light" and "minimal_light" or "minimal_dark")
 end
 
 apply_system_theme()

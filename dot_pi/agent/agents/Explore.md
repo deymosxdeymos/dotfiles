@@ -1,7 +1,8 @@
 ---
 description: Fast codebase exploration agent (read-only)
 tools: read, bash, grep, find, ls
-model: github-copilot/claude-haiku-4.5
+model: anthropic/claude-sonnet-5
+thinking: low
 prompt_mode: replace
 ---
 
