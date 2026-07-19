@@ -1,30 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@ex-machina/opencode-anthropic-auth@1.8.1", "./plugins/ban-git.js"],
   "instructions": ["instructions/jj-over-git.md"],
   "autoupdate": false,
-  "permission": {
-    "*": "allow",
-    "bash": {
-      "*": "allow",
-      "git*": "deny",
-      "*/git*": "deny"
-    }
-  },
-  "agent": {
-    "build": {
-      "model": "openai/gpt-5.5",
-      "variant": "high"
-    },
-    "explore": {
-      "model": "anthropic/claude-sonnet-5",
-      "variant": "low"
-    },
-    "general": {
-      "model": "anthropic/claude-opus-4-8",
-      "variant": "high"
-    }
-  },
+  "permissions": [
+    { "action": "*", "resource": "*", "effect": "allow" }
+  ],
   "mcp": {
     "expect": {
       "type": "local",
