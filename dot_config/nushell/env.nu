@@ -17,6 +17,7 @@ let extra_paths = [
   $"($env.HOME)/.local/opt/go/bin"
   $"($env.HOME)/.cargo/bin"
   $"($env.HOME)/.deno/bin"
+  $"($env.HOME)/.nub/bin"
   $"($env.HOME)/.bun/bin"
   $"($env.HOME)/.vite-plus/bin"
   $"($env.HOME)/.opencode/bin"
@@ -49,7 +50,8 @@ $env.HELIX_RUNTIME = ($env.HOME | path join "helix" "runtime")
 $env.AWS_REGION = "ap-southeast-1"
 
 # Keep API keys and other secrets out of chezmoi. Source a local-only file if needed.
-let local_env = ($env.HOME | path join ".config" "nushell" "local-env.nu")
-if ($local_env | path exists) {
-  source $local_env
-}
+# `source` is a parse-time keyword: its argument must be a const, and the file is
+# parsed unconditionally, so a runtime `if` guard can't protect a missing file.
+# Use a const path and fall back to /dev/null (a no-op source) when it's absent.
+const local_env = ($nu.home-dir | path join ".config" "nushell" "local-env.nu")
+source (if ($local_env | path exists) { $local_env } else { "/dev/null" })

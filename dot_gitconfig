@@ -11,3 +11,24 @@
 	defaultBranch = main
 [url "https://github.com/"]
 	insteadOf = git@github.com:
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
+[core]
+	editor = nvim
+	fsmonitor = true
+[fetch]
+	prune = true
+	writeCommitGraph = true
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
+	updateRefs = true
+[rerere]
+	autoUpdate = true
+	enabled = true
+[alias]
+	fomo = "!fish -c 'git fetch origin (__git.default_branch); and git rebase origin/(__git.default_branch) --autostash'"
+	lg = log --oneline --decorate --graph

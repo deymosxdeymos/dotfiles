@@ -1,27 +1,57 @@
 {
-  "lastChangelogVersion": "0.80.6",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-fable-5",
-  "defaultThinkingLevel": "high",
+  "lastChangelogVersion": "0.82.1",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-sol",
+  "defaultThinkingLevel": "low",
   "hideThinkingBlock": false,
   "steeringMode": "one-at-a-time",
   "followUpMode": "one-at-a-time",
   "theme": "light/dark",
   "enabledModels": [
-    "anthropic/claude-opus-4-8",
-    "anthropic/claude-sonnet-5",
     "openai-codex/gpt-5.6-luna",
     "openai-codex/gpt-5.6-sol",
-    "openai-codex/gpt-5.6-terra"
+    "openai-codex/gpt-5.6-terra",
+    "anthropic/claude-opus-5"
   ],
   "packages": [
     "npm:@benvargas/pi-claude-code-use",
     "npm:@ff-labs/pi-fff",
-    "npm:pi-vitals",
-    "git:github.com/edxeth/pi-subagents"
+    "git:github.com/deymosxdeymos/pi-vitals",
+    "npm:@plannotator/pi-extension",
+    "git:github.com/dmmulroy/pi-mcp",
+    "npm:@charmland/pi-hyper-provider"
   ],
   "compaction": {
     "enabled": true
   },
-  "defaultProjectTrust": "always"
+  "subagents": {
+    "agentOverrides": {
+      "oracle": {
+        "model": "anthropic/claude-fable-5",
+        "thinking": "high"
+      },
+      "scout": {
+        "model": "anthropic/claude-sonnet-5",
+        "thinking": "low"
+      },
+      "delegate": {
+        "model": "anthropic/claude-sonnet-5",
+        "thinking": "low"
+      },
+      "reviewer": {
+        "model": "openai-codex/gpt-5.6-sol",
+        "thinking": "high"
+      },
+      "worker": {
+        "model": "openai-codex/gpt-5.6-terra",
+        "thinking": "high"
+      }
+    }
+  },
+  "defaultProjectTrust": "always",
+  "showCacheMissNotices": true,
+  "collapseChangelog": true,
+  "images": {
+    "autoResize": true
+  }
 }

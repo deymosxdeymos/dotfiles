@@ -47,13 +47,34 @@ vim.pack.add({
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
   { src = "https://github.com/datsfilipe/vesper.nvim" },
+  { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
   { src = "https://github.com/maxmx03/solarized.nvim" },
   { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
   { src = "https://github.com/chentoast/marks.nvim" },
   { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
+  { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 })
 
 require("mini.icons").setup()
+
+require("render-markdown").setup({
+  file_types = { "markdown" },
+  completions = { lsp = { enabled = true } },
+  code = {
+    sign = false,
+    width = "block",
+    right_pad = 1,
+    border = "thin",
+  },
+  heading = {
+    sign = false,
+    icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+  },
+  checkbox = {
+    enabled = true,
+  },
+})
+
 require("marks").setup({
   builtin_marks = { "<", ">", "^" },
 })
@@ -207,7 +228,10 @@ local function apply_system_theme()
 
   current_system_scheme = scheme
   vim.o.background = scheme
-  vim.cmd.colorscheme(scheme == "light" and "minimal_light" or "minimal_dark")
+  require("catppuccin").setup({
+    flavour = scheme == "light" and "latte" or "macchiato",
+  })
+  vim.cmd.colorscheme("catppuccin")
 end
 
 apply_system_theme()
@@ -252,8 +276,48 @@ local fmt_server = {
   lua = "lua_ls",
 }
 
+local function format_with_stdin(bufnr, cmd)
+  if vim.fn.executable(cmd[1]) ~= 1 then
+    return
+  end
+
+  local input = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local result = vim.system(cmd, { stdin = input, text = true }):wait()
+  if result.code ~= 0 or not result.stdout or result.stdout == "" then
+    return
+  end
+
+  local output = vim.split(result.stdout, "\n", { plain = true })
+  if output[#output] == "" then
+    table.remove(output)
+  end
+
+  if vim.deep_equal(input, output) then
+    return
+  end
+
+  local view = vim.fn.winsaveview()
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, output)
+  vim.fn.winrestview(view)
+end
+
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function(args)
+    if vim.bo[args.buf].filetype == "markdown" then
+      format_with_stdin(args.buf, {
+        "deno",
+        "fmt",
+        "--ext",
+        "md",
+        "--prose-wrap",
+        "always",
+        "--line-width",
+        "80",
+        "-",
+      })
+      return
+    end
+
     local preferred = fmt_server[vim.bo[args.buf].filetype]
     if not preferred then
       return
@@ -445,6 +509,7 @@ map("n", "<leader>uw", function()
   vim.wo.wrap = not vim.wo.wrap
   vim.wo.linebreak = vim.wo.wrap
 end, { desc = "Toggle soft wrap" })
+map("n", "<leader>um", "<Cmd>RenderMarkdown toggle<CR>", { desc = "Toggle markdown render" })
 map({ "n", "v", "x" }, "<leader>n", ":norm ", { desc = "Enter normal command" })
 map({ "n", "v", "x" }, "<leader>o", "<Cmd>source %<CR>", { desc = "Source current file" })
 map({ "n", "v", "x" }, "<leader>O", "<Cmd>restart<CR>", { desc = "Restart Neovim" })
