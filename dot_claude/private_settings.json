@@ -1,0 +1,173 @@
+{
+  "cleanupPeriodDays": 365000,
+  "env": {
+    "CLAUDE_BASH_NO_LOGIN": "1",
+    "CLAUDE_CODE_EAGER_FLUSH": "1",
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "ENABLE_TOOL_SEARCH": "auto:5",
+    "USE_BUILTIN_RIPGREP": "0"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(rg*)",
+      "Bash(ls*)",
+      "Bash(jj bookmark list*)",
+      "Bash(jj config get*)",
+      "Bash(jj config list*)",
+      "Bash(jj config path*)",
+      "Bash(jj diff*)",
+      "Bash(jj d*)",
+      "Bash(jj evolog*)",
+      "Bash(jj file annotate*)",
+      "Bash(jj file list*)",
+      "Bash(jj file search*)",
+      "Bash(jj file show*)",
+      "Bash(jj git colocation status*)",
+      "Bash(jj git remote list*)",
+      "Bash(jj git root*)",
+      "Bash(jj help*)",
+      "Bash(jj interdiff*)",
+      "Bash(jj log*)",
+      "Bash(jj op diff*)",
+      "Bash(jj op log*)",
+      "Bash(jj op show*)",
+      "Bash(jj operation diff*)",
+      "Bash(jj operation log*)",
+      "Bash(jj operation show*)",
+      "Bash(jj resolve --list)",
+      "Bash(jj root*)",
+      "Bash(jj show*)",
+      "Bash(jj sparse list*)",
+      "Bash(jj st*)",
+      "Bash(jj status*)",
+      "Bash(jj tag list*)",
+      "Bash(jj util completion*)",
+      "Bash(jj util config-schema*)",
+      "Bash(jj util markdown-help*)",
+      "Bash(jj version*)",
+      "Bash(jj workspace list*)",
+      "Bash(jj workspace root*)",
+      "Bash(gh auth status*)",
+      "Bash(gh cache list*)",
+      "Bash(gh gist list*)",
+      "Bash(gh gist view*)",
+      "Bash(gh issue list*)",
+      "Bash(gh issue status*)",
+      "Bash(gh issue view*)",
+      "Bash(gh label list*)",
+      "Bash(gh pr checks*)",
+      "Bash(gh pr diff*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr status*)",
+      "Bash(gh pr view*)",
+      "Bash(gh release list*)",
+      "Bash(gh release view*)",
+      "Bash(gh repo list*)",
+      "Bash(gh repo view*)",
+      "Bash(gh ruleset check*)",
+      "Bash(gh ruleset list*)",
+      "Bash(gh ruleset view*)",
+      "Bash(gh run list*)",
+      "Bash(gh run view*)",
+      "Bash(gh search *)",
+      "Bash(gh status*)",
+      "Bash(gh variable get*)",
+      "Bash(gh variable list*)",
+      "Bash(gh workflow list*)",
+      "Bash(gh workflow view*)",
+      "Bash(cargo clippy*)",
+      "Glob",
+      "Grep",
+      "Read(/nix/store/**)",
+      "LSP",
+      "WebFetch",
+      "WebSearch",
+      "TaskCreate",
+      "TaskUpdate",
+      "TaskGet",
+      "TaskList",
+      "TaskOutput",
+      "TaskStop",
+      "Bash(jj file track*)",
+      "Read(/etc/profiles/**)"
+    ],
+    "deny": [
+      "Bash(cargo check*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "skillOverrides": {
+    "ask-matt": "off",
+    "bootstrap-prelude": "off",
+    "ghidra": "off",
+    "gmcli": "off",
+    "research": "off",
+    "resolving-merge-conflicts": "off",
+    "setup-matt-pocock-skills": "off",
+    "to-tickets": "off",
+    "triage": "off",
+    "wayfinder": "off",
+    "web-perf": "off",
+    "wrangler": "off"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/deymos/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/home/deymos/.claude/claude-code-statusline.nu"
+  },
+  "enabledPlugins": {
+    "code-review@claude-plugins-official": true,
+    "figma@claude-plugins-official": false,
+    "security-guidance@claude-plugins-official": true,
+    "thermos@cursor-plugins-claude": true,
+    "bash-guard@mary-skills": true,
+    "simplify@mary-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "cursor-plugins-claude": {
+      "source": {
+        "source": "github",
+        "repo": "kdoroszewicz/cursor-plugins-claude"
+      }
+    },
+    "mary-skills": {
+      "source": {
+        "source": "git",
+        "url": "https://tangled.org/mary.my.id/claude-skills.git"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "advisorModel": "fable",
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "autoMemoryEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "autoCompactEnabled": true,
+  "autoCompactWindow": "auto",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": false
+}

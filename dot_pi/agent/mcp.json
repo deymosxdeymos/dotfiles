@@ -1,0 +1,36 @@
+{
+  "mcp": {
+    "toolMode": "proxy",
+    "startup": "lazy",
+    "servers": {
+      "chrome-devtools": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "chrome-devtools-mcp@latest"
+        ],
+        "enabled": false,
+        "timeout": 60000
+      },
+      "open-computer-use": {
+        "type": "local",
+        "command": [
+          "/home/deymos/src/ocu-wayland-patch/dist/linux/amd64/open-computer-use",
+          "mcp"
+        ],
+        "enabled": false,
+        "timeout": 60000
+      },
+      "executor": {
+        "type": "local",
+        "command": [
+          "/home/deymos/.local/npm/bin/executor",
+          "mcp"
+        ],
+        "enabled": true,
+        "timeout": 60000
+      }
+    }
+  }
+}
