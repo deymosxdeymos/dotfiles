@@ -1,6 +1,6 @@
-model = "gpt-5.6-terra"
+model = "gpt-5.6-sol"
 model_verbosity = "low"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 approvals_reviewer = "auto_review"
 
 [projects."/home/deymos/work/gamgen"]
@@ -30,6 +30,9 @@ trust_level = "trusted"
 [projects."/home/deymos/work/gamgen-oxc"]
 trust_level = "trusted"
 
+[projects."/home/deymos/.herdr/workspaces/gamgen/fix-upload-media"]
+trust_level = "trusted"
+
 [marketplaces.openai-bundled]
 last_updated = "2026-07-11T08:34:38Z"
 source_type = "local"
@@ -43,23 +46,7 @@ source = "/home/deymos/.cache/codex-runtimes/codex-primary-runtime/plugins/opena
 [features]
 hooks = true
 js_repl = false
-
-[mcp_servers.node_repl]
-command = "/opt/codex-desktop/resources/node_repl"
-startup_timeout_sec = 120.0
-
-[mcp_servers.node_repl.env]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.609.30741"
-CODEX_HOME = "/home/deymos/.codex"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = ""
-NODE_REPL_NODE_PATH = "/opt/codex-desktop/resources/node-runtime/bin/node"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "a3f3ca79fe2bff56076b895f1f13a8f673168160bd79d880cc34b4500e08a71c"
-NODE_REPL_TRUSTED_CODE_PATHS = "/home/deymos/.codex"
+multi_agent = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4

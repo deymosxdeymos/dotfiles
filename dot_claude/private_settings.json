@@ -138,7 +138,8 @@
     "security-guidance@claude-plugins-official": true,
     "thermos@cursor-plugins-claude": true,
     "bash-guard@mary-skills": true,
-    "simplify@mary-skills": true
+    "simplify@mary-skills": true,
+    "pstack@pstack-claude": true
   },
   "extraKnownMarketplaces": {
     "cursor-plugins-claude": {
@@ -151,6 +152,12 @@
       "source": {
         "source": "git",
         "url": "https://tangled.org/mary.my.id/claude-skills.git"
+      }
+    },
+    "pstack-claude": {
+      "source": {
+        "source": "github",
+        "repo": "michael-denyer/pstack-claude"
       }
     }
   },
@@ -165,7 +172,6 @@
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
   "autoCompactEnabled": true,
-  "autoCompactWindow": "auto",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,

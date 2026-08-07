@@ -1,0 +1,29 @@
+# Pierre Dark Soft — Ghostty Theme
+# Ported from https://github.com/pierrecomputer/theme
+
+background = #101010
+foreground = #8a8a8a
+cursor-color = #69b1ff
+cursor-text = #171717
+selection-background = #1f3e5e
+selection-foreground = #d4d4d4
+
+# Normal colors — adapted from the Soft syntax palette
+palette = 0=#171717
+palette = 1=#ff91a8
+palette = 2=#8cda94
+palette = 3=#ffde80
+palette = 4=#97c4ff
+palette = 5=#ba8ffd
+palette = 6=#96d9f6
+palette = 7=#bcbcbc
+
+# Bright colors
+palette = 8=#636363
+palette = 9=#ff6762
+palette = 10=#60d199
+palette = 11=#ffd452
+palette = 12=#69b1ff
+palette = 13=#e290f0
+palette = 14=#68cdf2
+palette = 15=#d4d4d4

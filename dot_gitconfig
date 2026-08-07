@@ -32,3 +32,8 @@
 [alias]
 	fomo = "!fish -c 'git fetch origin (__git.default_branch); and git rebase origin/(__git.default_branch) --autostash'"
 	lg = log --oneline --decorate --graph
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

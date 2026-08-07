@@ -1,0 +1,29 @@
+# Rasmus Light — Ghostty Theme
+# Ported from the VS Code "rsms bright" theme
+
+background = #fdfdfc
+foreground = #000000
+cursor-color = #0044ff
+cursor-text = #fdfdfc
+selection-background = #d2ecfe
+selection-foreground = #000000
+
+# Normal colors
+palette = 0=#000000
+palette = 1=#990000
+palette = 2=#116432
+palette = 3=#aa8844
+palette = 4=#0043a8
+palette = 5=#750054
+palette = 6=#66559b
+palette = 7=#cccccc
+
+# Bright colors
+palette = 8=#666666
+palette = 9=#ff3300
+palette = 10=#2f7b0a
+palette = 11=#ffe642
+palette = 12=#0044ff
+palette = 13=#aa2298
+palette = 14=#333333
+palette = 15=#fdfdfc

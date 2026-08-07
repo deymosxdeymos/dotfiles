@@ -1,0 +1,30 @@
+# Cursor Dark — Ghostty Theme
+# Ported from the opencode "Cursor" theme (dark variant)
+# primary/accent/cursor token = darkCyan #88c0d0
+
+background = #181818
+foreground = #e4e4e4
+cursor-color = #88c0d0
+cursor-text = #181818
+selection-background = #262626
+selection-foreground = #e4e4e4
+
+# Normal colors
+palette = 0=#262626
+palette = 1=#e34671
+palette = 2=#3fa266
+palette = 3=#f1b467
+palette = 4=#81a1c1
+palette = 5=#aaa0fa
+palette = 6=#88c0d0
+palette = 7=#e4e4e4
+
+# Bright colors
+palette = 8=#4b4b4b
+palette = 9=#fc6b83
+palette = 10=#70b489
+palette = 11=#f8c762
+palette = 12=#87c3ff
+palette = 13=#e394dc
+palette = 14=#82d2ce
+palette = 15=#ffffff

@@ -1,0 +1,30 @@
+# Cursor Light — Ghostty Theme
+# Ported from the opencode "Cursor" theme (light variant)
+# primary/accent/cursor token = lightTeal #6f9ba6
+
+background = #fcfcfc
+foreground = #141414
+cursor-color = #6f9ba6
+cursor-text = #fcfcfc
+selection-background = #ededed
+selection-foreground = #141414
+
+# Normal colors
+palette = 0=#141414
+palette = 1=#cf2d56
+palette = 2=#1f8a65
+palette = 3=#c08532
+palette = 4=#3c7cab
+palette = 5=#b3003f
+palette = 6=#6f9ba6
+palette = 7=#141414
+
+# Bright colors
+palette = 8=#4b4b4b
+palette = 9=#e75e78
+palette = 10=#55a583
+palette = 11=#db704b
+palette = 12=#206595
+palette = 13=#b8448b
+palette = 14=#9e94d5
+palette = 15=#000000

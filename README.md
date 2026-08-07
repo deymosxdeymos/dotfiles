@@ -23,16 +23,20 @@ chezmoi init --apply <git-remote-url>
 Tracked:
 
 - Git and jj config
+- Fish config, aliases, and functions
 - Nushell config, aliases, and zoxide integration
 - Neovim config
 - Ghostty, Alacritty, tmux, Zellij, and Yazi config
-- opencode config, local plugin, and instructions
+- opencode config, commands, local plugin, and instructions
 - `~/.agents/skills`
-- Pi agent extensions, custom agents, and non-secret settings
+- Claude Code, Codex, and Pi agent settings
 
 Not tracked:
 
 - API keys, auth files, credentials, tokens, browser profiles, histories, logs, caches, and dependency folders
+- `~/.config/fish/local-env.fish` and `~/.config/nushell/local-env.nu`, which hold machine-local secrets
+- `~/.config/opencode/service.json`, which holds a service password
+- Generated state: fish completions and `fish_variables`, `ghostty/auto`, `jj/repos`, shell histories
 - `~/.bashrc` and `~/.npmrc` for now, because the current files contain secrets
 
 ## Notes
